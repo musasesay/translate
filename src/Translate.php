@@ -2,8 +2,8 @@
 
 namespace Yansongda\Translate;
 
-use Yansongda\Translate\Support\Config;
-use Yansongda\Translate\Traits\HasHttpRequest;
+use Yansongda\Supports\Config;
+use Yansongda\Supports\Traits\HasHttpRequest;
 use Yansongda\Translate\Exceptions\GatewayException;
 use Yansongda\Translate\Exceptions\InvalidArgumentException;
 
