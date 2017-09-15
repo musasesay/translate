@@ -3,37 +3,20 @@
 namespace Yansongda\Translate;
 
 use Yansongda\Supports\Config;
-use Yansongda\Supports\Traits\HasHttpRequest;
+use Yansongda\Translate\Contracts\Translation;
 use Yansongda\Translate\Exceptions\GatewayException;
-use Yansongda\Translate\Exceptions\InvalidArgumentException;
 
 class Translate
 {
-    use HasHttpRequest;
-
     /**
-     * baidu api.
+     * config.
      *
-     * @var string
-     */
-    protected $gateway = 'https://fanyi-api.baidu.com/api/trans/vip/translate';
-
-    /**
-     * baidu api config.
-     *
-     * @var array
+     * @var Config
      */
     protected $config;
 
     /**
-     * user_config.
-     *
-     * @var Config
-     */
-    protected $user_config;
-
-    /**
-     * construct.
+     * bootstrap.
      *
      * @author yansongda <me@yansongda.cn>
      *
@@ -41,67 +24,29 @@ class Translate
      */
     public function __construct(array $config)
     {
-        $this->user_config = new Config($config);
-
-        if (is_null($this->user_config->get('appid')) || is_null($this->user_config->get('appsecret'))) {
-            throw new InvalidArgumentException("missing config [appid] or [appsecret]", 1);
-        }
-
-        $this->config = [
-            'q' => '',
-            'from' => '',
-            'to' => '',
-            'appid' => $this->user_config->get('appid'),
-            'salt' => time(),
-            'sign' => '',
-        ];
+        $this->config = new Config($config);
     }
 
     /**
-     * translate.
+     * translation driver.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param string $q
-     * @param string $to
-     * @param string $from
+     * @param string $driver
      *
-     * @return
+     * @return Translation
      */
-    public function trans($q, $to = 'en', $from = 'auto')
+    public function driver($driver)
     {
-        $this->config['q'] = $q;
-        $this->config['from'] = $from;
-        $this->config['to'] = $to;
-        $this->config['sign'] = $this->getSign();
-
-        $res = $this->post($this->gateway, $this->config);
-
-        if (isset($res['error_code']) && $res['error_code'] !== '52000') {
-            throw new GatewayException(
-                'get result error:' . $res['error_msg'],
-                $res['error_code'],
-                $res
-            );
+        if (is_null($this->config->get($driver))) {
+            throw new GatewayException("missing driver [$driver] config", 1);
         }
 
-        $trans_result = '';
-        foreach ($res['trans_result'] as $k => $v) {
-            $trans_result .= $v['dst'] . "\n";
-        }
-
-        return trim($trans_result, "\n");
+        return $this->buildDriver();
     }
 
-    /**
-     * get sign
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
-     */
-    protected function getSign()
+    protected function buildDriver($driver)
     {
-        return md5($this->config['appid'] . $this->config['q'] . $this->config['salt'] . $this->user_config->get('appsecret'));
+        # code...
     }
 }
