@@ -49,8 +49,12 @@ $t = new Translate($config);
 echo $t->trans("你好");
 ```
 
-支持的翻译列表「百度」请传送至 [这里](http://api.fanyi.baidu.com/api/trans/product/apidoc)
-支持的翻译列表「有道」请传送至 [这里](http://ai.youdao.com/docs/doc-trans-api.s#p05)
+## 支持的翻译列表
+- 百度
+请传送至 [这里](http://api.fanyi.baidu.com/api/trans/product/apidoc)  
+
+- 有道
+请传送至 [这里](http://ai.youdao.com/docs/doc-trans-api.s#p05)
 
 ## License
 MIT
