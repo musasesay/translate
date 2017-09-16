@@ -20,18 +20,18 @@ class YoudaoGateway implements Translation
     protected $gateway = 'https://openapi.youdao.com/api';
 
     /**
-     * baidu api config.
+     * baidu api query.
      *
      * @var array
      */
-    protected $config;
+    protected $query;
 
     /**
      * user_config.
      *
      * @var Config
      */
-    protected $user_config;
+    protected $config;
 
     /**
      * construct.
@@ -42,17 +42,17 @@ class YoudaoGateway implements Translation
      */
     public function __construct(array $config)
     {
-        $this->user_config = new Config($config);
+        $this->config = new Config($config);
 
-        if (is_null($this->user_config->get('appid')) || is_null($this->user_config->get('appsecret'))) {
+        if (is_null($this->config->get('appid')) || is_null($this->config->get('appsecret'))) {
             throw new InvalidArgumentException("missing config [appid] or [appsecret]", 1);
         }
 
-        $this->config = [
+        $this->query = [
             'q' => '',
             'from' => '',
             'to' => '',
-            'appKey' => $this->user_config->get('appid'),
+            'appKey' => $this->config->get('appid'),
             'salt' => time(),
             'sign' => '',
         ];
@@ -69,14 +69,14 @@ class YoudaoGateway implements Translation
      *
      * @return
      */
-    public function trans($q, $to = 'EN', $from = 'auto')
+    public function trans($q, $to = 'en', $from = 'auto')
     {
-        $this->config['q'] = $q;
-        $this->config['from'] = $from;
-        $this->config['to'] = $to;
-        $this->config['sign'] = $this->getSign();
+        $this->query['q'] = $q;
+        $this->query['from'] = $from;
+        $this->query['to'] = $to;
+        $this->query['sign'] = $this->getSign();
 
-        $res = $this->post($this->gateway, $this->config);
+        $res = $this->post($this->gateway, $this->query);
 
         if (!isset($res['errorCode']) && $res['errorCode'] !== '0') {
             throw new GatewayException(
@@ -103,6 +103,6 @@ class YoudaoGateway implements Translation
      */
     protected function getSign()
     {
-        return md5($this->config['appid'] . $this->config['q'] . $this->config['salt'] . $this->user_config->get('appsecret'));
+        return md5($this->query['appid'] . $this->query['q'] . $this->query['salt'] . $this->config->get('appsecret'));
     }
 }

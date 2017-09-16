@@ -2,7 +2,8 @@
 
 namespace Yansongda\Translate\Contracts;
 
-interface Translation {
+interface Translation
+{
 
     /**
      * translate.
@@ -15,5 +16,5 @@ interface Translation {
      *
      * @return string
      */
-    public function trans($q, $to, $from = 'auto');
+    public function trans($q, $to = 'en', $from = 'auto');
 }
