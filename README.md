@@ -20,9 +20,6 @@ $from: 源语言   可选 - 默认 auto
 参数：  
 $q: 带转换的中文字符串  
 
-
-
-
 ## 使用方法
 ```php
 <?php
@@ -52,7 +49,8 @@ $t = new Translate($config);
 echo $t->trans("你好");
 ```
 
-支持的翻译列表请传送至 [这里](http://api.fanyi.baidu.com/api/trans/product/apidoc)
+支持的翻译列表「百度」请传送至 [这里](http://api.fanyi.baidu.com/api/trans/product/apidoc)
+支持的翻译列表「有道」请传送至 [这里](http://ai.youdao.com/docs/doc-trans-api.s#p05)
 
 ## License
 MIT
