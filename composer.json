@@ -1,7 +1,7 @@
 {
     "name": "yansongda/translate",
-    "description": "百度翻译 SDK",
-    "keywords": ["baidu", "translate", "翻译", "SDK"],
+    "description": "translate SDK",
+    "keywords": ["baidu", "youdao", "translate", "翻译", "SDK"],
     "support": {
         "issues": "https://github.com/yansongda/translate/issues",
         "source": "https://github.com/yansongda/translate"
