@@ -7,18 +7,20 @@
 
 ## 对外接口
 - trans(string $q, string $to, string $from = 'auto')  
-$q: 待翻译的字符串  
-$to: 目的语言    可选 - 默认 英文
-$from: 源语言   可选 - 默认 auto  
-
 作用：直接将带翻译字符串转换成目标语言  
 返回值：string 目标语言字符串  
+参数：  
+$q: 待翻译的字符串  
+$to: 目的语言    可选 - 默认 英文  
+$from: 源语言   可选 - 默认 auto  
 
-- link(string $q)
-$q: 带转换的中文字符串  
-
+- link(string $q)  
 作用：转换为 url 友好的链接格式  
 返回值：string   
+参数：  
+$q: 带转换的中文字符串  
+
+
 
 
 ## 使用方法
