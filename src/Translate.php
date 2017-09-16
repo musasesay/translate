@@ -58,7 +58,8 @@ class Translate
     public function trans($q, $to = 'en', $from = 'auto')
     {
         $success = false;
-        foreach ($this->strategy as $value) {
+
+        foreach ($this->strategy() as $value) {
             try {
                 $res = $this->driver($value)->trans($q, $to, $from);
                 $success = true;
@@ -77,16 +78,16 @@ class Translate
     }
 
     /**
-     * translate to link-like string
+     * translate to link-like string.
      *
      * @author yansongda <me@yansongda.cn>
      *
      * @param string $q
-     * @param string $seperater
+     * @param string $separator
      *
      * @return string
      */
-    public function link($q, $seperater = '-')
+    public function link($q, $separator = '-')
     {
         return Str::slug($this->trans($q), $separator);
     }
@@ -108,7 +109,7 @@ class Translate
 
         $gateway = __NAMESPACE__ . '\\Gateways\\' . ucfirst($driver) . 'Gateway';
 
-        return $this->buildDriver($gateway);
+        return $this->buildDriver($gateway, $driver);
     }
 
     /**
@@ -144,8 +145,8 @@ class Translate
      *
      * @return Translation
      */
-    protected function buildDriver($driver)
+    protected function buildDriver($gateway, $driver)
     {
-        return new $driver($this->config->get("gateways.{$driver}"));
+        return new $gateway($this->config->get("gateways.{$driver}"));
     }
 }

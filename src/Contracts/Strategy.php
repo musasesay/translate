@@ -11,5 +11,5 @@ interface Strategy
      *
      * @return string
      */
-    public function apply();
+    public function apply(array $gateways);
 }
