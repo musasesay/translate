@@ -78,7 +78,7 @@ class YoudaoGateway implements Translation
 
         $res = $this->post($this->gateway, $this->query);
 
-        if (!isset($res['errorCode']) && $res['errorCode'] !== '0') {
+        if (!isset($res['errorCode']) || $res['errorCode'] !== '0') {
             throw new GatewayException(
                 'get result error, error code' . $res['errorCode'],
                 $res['errorCode'],
@@ -103,6 +103,6 @@ class YoudaoGateway implements Translation
      */
     protected function getSign()
     {
-        return md5($this->query['appid'] . $this->query['q'] . $this->query['salt'] . $this->config->get('appsecret'));
+        return md5($this->query['appKey'] . $this->query['q'] . $this->query['salt'] . $this->config->get('appsecret'));
     }
 }
