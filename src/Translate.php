@@ -2,6 +2,7 @@
 
 namespace Yansongda\Translate;
 
+use Yansongda\Supports\Str;
 use Yansongda\Supports\Config;
 use Yansongda\Translate\Contracts\Strategy;
 use Yansongda\Translate\Contracts\Translation;
@@ -87,7 +88,7 @@ class Translate
      */
     public function link($q, $seperater = '-')
     {
-        $translation = $this->trans($q);
+        return Str::slug($this->trans($q), $separator);
     }
 
     /**
